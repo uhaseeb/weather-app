@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Favorites</title>
+  </head>
+  <body>
+    <h1>Your Favorites</h1>
+    {% if favorites.exists %}
+    <ul>
+      {% for favorite in favorites %}
+      <li><strong>{{ favorite.search }}</strong> <br /></li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>You have no saved favorites yet.</p>
+    {% endif %}
+  </body>
+</html>

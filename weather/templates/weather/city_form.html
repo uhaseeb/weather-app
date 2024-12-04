@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather App</title>
+  </head>
+  <body>
+    <h1>Check Weather</h1>
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Get Weather</button>
+    </form>
+
+    {% if weather_detail %}
+    <h2>Weather in {{ weather_detail.city_name }}</h2>
+    <ul>
+      <li>Status: {{ weather_detail.weather_status }}°C</li>
+      <li>Description: {{ weather_detail.weather_description }}°C</li>
+      <li>Temperature: {{ weather_detail.temperature }}°C</li>
+      <li>Feels Like: {{ weather_detail.feels_like }}°C</li>
+      <li>Temperature Min: {{ weather_detail.temperature_min }}°C</li>
+      <li>Temperature Max: {{ weather_detail.temperature_max }}°C</li>
+      <li>Pressure: {{ weather_detail.pressure }}°C</li>
+      <li>Humidity: {{ weather_detail.humidity }}%</li>
+      <li>Sea Level: {{ weather_detail.sea_level }}%</li>
+      <li>Ground Level: {{ weather_detail.ground_level }}%</li>
+      <li>Wind Speed: {{ weather_detail.wind_speed }} km/h</li>
+      <li>Wind Degree: {{ weather_detail.wind_degree }} km/h</li>
+    </ul>
+
+    <!-- Search History Section -->
+    <h2>Your Search History</h2>
+    {% if search_histories %}
+    <ul>
+      {% for history in search_histories %}
+      <li>
+        <strong>{{ history.search }}</strong>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>You have no search history yet.</p>
+    {% endif %}
+
+    <!-- Favorites Section -->
+    <h2>Your Favorites</h2>
+    {% if favorites %}
+    <ul>
+      {% for favorite in favorites %}
+      <li>{{ favorite.search }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>You have no favorites yet.</p>
+    {% endif %}
+
+    <!--Add To Favorites-->
+    <form method="post" action="{% url 'add_to_favorites' %}">
+      {% csrf_token %}
+      <input
+        type="hidden"
+        name="city_name"
+        value="{{ weather_detail.city_name }}"
+      />
+      <button type="submit">Add to Favorites</button>
+    </form>
+
+    {% endif %}
+  </body>
+</html>

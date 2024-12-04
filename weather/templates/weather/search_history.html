@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search History</title>
+  </head>
+  <body>
+    <h1>Your Search History</h1>
+    {% if search_histories.exists %}
+    <ul>
+      {% for search_history in search_histories %}
+      <li><strong>{{ search_history.search }}</strong> <br /></li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>You have no saved search history yet.</p>
+    {% endif %}
+  </body>
+</html>
